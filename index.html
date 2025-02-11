@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fish Agro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .fade {
+            animation: fade 0.3s ease-in-out;
+        }
+
+        @keyframes fade {
+            0% {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide {
+            filter: brightness(0.6);
+            /* Decrease brightness */
+            transition: all 0.3s ease-in-out;
+            border-radius: 20px;
+
+        }
+
+        .slide.blur {
+            filter: blur(4px);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+        }
+
+        .dynamic-text {
+            color: white;
+        }
+
+        /* .dynamic-text {
+            animation: textAnimation 3s ease-in-out infinite;
+        }
+        @keyframes textAnimation {
+            0% {
+                color: #FF6347; 
+            }
+            25% {
+                color: #4CAF50;
+            }
+            50% {
+                color: #1E90FF; 
+            }
+            75% {
+                color: #FFD700; 
+            }
+            100% {
+                color: #FF6347;
+            }
+        } */
+        .contact-btn {
+            position: relative;
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            background-color: #45a049;
+        }
+
+        .social-icons {
+            position: absolute;
+            top: -35px;
+            right: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #FF6347;
+            /* Change to Tomato color */
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="bg-blue-600 text-white fixed top-0 left-0 w-full shadow-md z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="text-2xl font-bold"><a href="index.html">Fish Agro</a></div>
+                <div class="hidden md:flex space-x-6">
+                    <a href="index.html" class="hover:text-gray-300 font-bold text-sm">Home</a>
+                    <a href="about.html" class="hover:text-gray-300 font-bold text-sm">About</a>
+                    <a href="product.html" class="hover:text-gray-300 font-bold text-sm">Products</a>
+                </div>
+                <button class="hidden md:block bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-gray-200"><a
+                        href="contact.html">Contact Us</a></button>
+                <button id="mobile-menu-btn" class="md:hidden block text-white">☰</button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-blue-700 text-white px-4 py-2">
+            <a href="#home" class="block py-2">Home</a>
+            <a href="#about" class="block py-2">About</a>
+            <a href="#services" class="block py-2">Services</a>
+            <button class="block w-full bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-gray-200 mt-2">Contact
+                Us</button>
+        </div>
+    </nav>
+
+    <!-- Home Section with Slider -->
+    <section id="home" class="relative mt-16 h-screen flex items-center justify-center text-center">
+        <!-- Background Video -->
+        <video autoplay loop muted class="absolute inset-0 w-full h-full object-cover">
+            <source src="207990_small.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- Slider Content -->
+        <div class="relative w-full max-w-4xl z-10">
+            <div class="absolute inset-0 flex justify-between items-center px-4 z-10">
+                <button id="prev" class=""></button>
+                <button id="next" class=""></button>
+            </div>
+            <div class="absolute inset-0 flex flex-col items-center justify-center space-y-4 z-10">
+                <h1 class="text-3xl md:text-4xl font-bold dynamic-text">Welcome to MyWebsite Fish Agro</h1>
+                <p class="text-base  font-bold dynamic-text">Lorem, ipsum dolor sit amet consectetur adipisicing
+                    elit.<br> Molestiae aspernatur libero quis explicabo praesentium fuga. <br>Blanditiis, repellendus?
+                    Eum, rem iusto?</p>
+                <div class="flex space-x-4">
+                    <div class="relative mt-20">
+                        <a href="#" class="contact-btn">Contact Now</a>
+                        <div class="social-icons">
+                            <!-- Social Icons Links -->
+                            <a href="https://www.facebook.com" target="_blank" class="fab fa-facebook-f"></a>
+                            <a href="https://twitter.com" target="_blank" class="fab fa-twitter"></a>
+                            <a href="https://www.instagram.com" target="_blank" class="fab fa-instagram"></a>
+                            <a href="https://www.linkedin.com" target="_blank" class="fab fa-linkedin-in"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slider Images -->
+            <div class="slider relative w-full h-96">
+                <img src="360_F_1085582874_GCCLN62cC3BTQTQGH5nhCplG9JPbOQ3q.jpg"
+                    class="slide w-full h-full object-cover fade">
+                <img src="360_F_671660710_0MrYN5pDtjPCgs6jutxPS0my2ISRwygm.jpg"
+                    class="slide w-full h-full object-cover hidden fade">
+                <img src="360_F_921456684_TpxYCOWZWlKD8cJucKVajWxPUk391WW0.jpg"
+                    class="slide w-full h-full object-cover hidden fade">
+                <img src="pngtree-a-vibrant-aquarium-scene-filled-with-colorful-goldfish-and-plants-image_16823160.jpg"
+                    class="slide w-full h-full object-cover hidden fade">
+            </div>
+
+            <!-- Slider Dots -->
+            <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
+                <span class="dot w-3 h-3 bg-white rounded-full"></span>
+                <span class="dot w-3 h-3 bg-gray-500 rounded-full"></span>
+                <span class="dot w-3 h-3 bg-gray-500 rounded-full"></span>
+                <span class="dot w-3 h-3 bg-gray-500 rounded-full"></span>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // JavaScript for Slider
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+
+        let currentSlide = 0;
+        let slideInterval;
+
+        const showSlide = (index) => {
+            if (index >= slides.length) {
+                currentSlide = 0;
+            } else if (index < 0) {
+                currentSlide = slides.length - 1;
+            } else {
+                currentSlide = index;
+            }
+
+            slides.forEach((slide, i) => {
+                slide.classList.add('hidden');
+                slide.classList.remove('fade');
+                slide.classList.remove('blur');
+                if (i === currentSlide) {
+                    slide.classList.remove('hidden');
+                    slide.classList.add('fade');
+                } else {
+                    slide.classList.add('blur');
+                }
+            });
+
+            dots.forEach((dot, i) => {
+                dot.classList.remove('bg-white');
+                dot.classList.add('bg-gray-500');
+                if (i === currentSlide) {
+                    dot.classList.remove('bg-gray-500');
+                    dot.classList.add('bg-white');
+                }
+            });
+        };
+
+        prevButton.addEventListener('click', () => {
+            clearInterval(slideInterval);
+            showSlide(currentSlide - 1);
+            startAutoSlide(); // Restart the auto slide when manual navigation occurs
+        });
+
+        nextButton.addEventListener('click', () => {
+            clearInterval(slideInterval);
+            showSlide(currentSlide + 1);
+            startAutoSlide(); // Restart the auto slide when manual navigation occurs
+        });
+
+        // For dot navigation
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                showSlide(i);
+            });
+        });
+
+        // Auto slide change functionality
+        const startAutoSlide = () => {
+            slideInterval = setInterval(() => {
+                showSlide(currentSlide + 1);
+            }, 5000); // Change slide every 5 seconds
+        };
+
+        // Start auto slide when the page loads
+        startAutoSlide();
+    </script>
+
+
+    <!-- about section start tailwind css  -->
+
+    <section class="flex flex-col md:flex-row items-center justify-center bg-gray-100 py-16 px-6">
+        <!-- Image Section -->
+        <div class="w-full md:w-1/2 flex justify-center">
+            <img src="images/about-main.jpg" alt="About Image" class="rounded-lg shadow-lg">
+        </div>
+
+        <!-- Content Section -->
+        <div class="w-full md:w-1/2 mt-6 md:mt-0 md:pl-12 text-center md:text-left">
+            <h1 class="text-3xl font-bold text-gray-900 mb-4 animate-pulse">About Our Company</h1>
+            <p class="text-gray-700 leading-relaxed">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut libero eu arcu vehicula
+                aliquet. Nam aliquet turpis ut dui hendrerit, a molestie nunc egestas. Suspendisse potenti.
+                Nullam tincidunt mauris eget purus interdum, eget efficitur purus interdum. Vestibulum non
+                lectus ut libero tempus gravida.
+            </p>
+            <button
+                class="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-all duration-300">
+                Contact Now
+            </button>
+        </div>
+    </section>
+
+
+    <!-- <section class="relative w-full h-screen flex items-center justify-center overflow-hidden"> -->
+    <!-- Background Video -->
+    <!-- <video autoplay loop muted class="absolute w-full h-full object-cover">
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video> -->
+
+    <!-- Overlay -->
+    <!-- <div class="absolute inset-0 bg-black bg-opacity-50"></div> -->
+
+    <!-- About Us Card -->
+    <!-- <div class="relative bg-white bg-opacity-90 p-8 rounded-lg shadow-lg max-w-lg text-center">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">About Us</h1>
+            <p class="text-gray-700 leading-relaxed">
+                We are dedicated to providing high-quality products and services. Our team is committed 
+                to innovation, excellence, and customer satisfaction. Join us on our journey to success.
+            </p>
+            <button class="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-all duration-300">
+                Learn More
+            </button>
+        </div>
+    </section> -->
+
+
+
+
+    <!-- product card start  -->
+    <section class="container">
+        <h2 class="container__title">Select Your Product</h2>
+
+        <div class="card__container  center">
+            <article>
+                <!-- CARD PRODUCT -->
+                <div class="card__product">
+                    <img src="images/aqua salt.webp" alt="image" class="card__img">
+
+                    <div>
+                        <h3 class="card__name font-bold">Aqua Salt</h3>
+                        <span class="card__price">$299</span>
+                    </div>
+                </div>
+
+                <!-- POPUP MODAL -->
+                <div class="modal">
+                    <div class="modal__card">
+                        <i class="ri-close-large-line modal__close"></i>
+
+                        <!-- <img src="assets/img/card-img-1.png" alt="image" class="modal__img"> -->
+
+                        <div>
+                            <h3 class="modal__name font-bold">Aqua Salt</h3>
+                            <p class="modal__info">
+                                <b>বর্ণনা</b>: Aqua Salt হল একটি প্রাকৃতিক সল্ট মিশ্রণ, যা মাছের পানির গুণগত মান
+                                উন্নত করতে ব্যবহৃত হয়। এটি পানির pH লেভেল বজায় রেখে মাছের শ্বাসযন্ত্র এবং হজম
+                                ব্যবস্থাকে সুস্থ রাখে। Aqua Salt মাছের শারীরিক অবস্থা উন্নত করে এবং রোগ প্রতিরোধ
+                                ক্ষমতা বাড়ায়।<br>
+                                <b>উপকারিতা: </b> <br>
+                                পানির pH ব্যালান্স বজায় রাখে, যা মাছের স্বাস্থ্যের জন্য গুরুত্বপূর্ণ।<br>
+                                শ্বাসপ্রশ্বাসের প্রক্রিয়ায় সহায়তা করে এবং শারীরিক শক্তি বাড়ায়। <br>
+                                মাছের রোগ প্রতিরোধ ক্ষমতা বৃদ্ধি করে, বিশেষত শ্বাসযন্ত্রের রোগ থেকে।<br>
+                                <b>অপকারিতা</b>: <br>
+                                অতিরিক্ত ব্যবহার মাছের শরীরে নুনের অতিরিক্ত পরিমাণ সৃষ্টি করতে পারে, যা মাছের জন্য
+                                ক্ষতিকর হতে পারে। <br>
+                                <b> উপাদান</b>: <br>
+                                সোডিয়াম ক্লোরাইড (NaCl): 85% <br>
+                                পটাশিয়াম ক্লোরাইড (KCl): 10% <br>
+                                ক্যালসিয়াম ক্লোরাইড (CaCl₂): 5% <br>
+                            </p>
+                            <span class="modal__price">$299</span>
+                        </div>
+
+                        <div class="modal__buttons">
+                            <button class="modal__button modal__button-ghost">Buy Now</button>
+                            <button class="modal__button">Contact us</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article>
+                <!-- CARD PRODUCT -->
+                <div class="card__product">
+                    <img src="images/BioZen.webp" alt="image" class="card__img">
+
+                    <div>
+                        <h3 class="card__name font-bold">Biozen</h3>
+                        <span class="card__price">$119</span>
+                    </div>
+                </div>
+
+                <!-- POPUP MODAL -->
+                <div class="modal">
+                    <div class="modal__card">
+                        <i class="ri-close-large-line modal__close"></i>
+
+                        <!-- <img src="assets/img/card-img-2.png" alt="image" class="modal__img"> -->
+
+                        <div>
+                            <h3 class="modal__name font-bold">Biozen</h3>
+                            <p class="modal__info">
+                                <b>বর্ণনা:</b> Biozen একটি প্রদাহ প্রতিরোধক সাপ্লিমেন্ট, যা মাছের শারীরিক অবস্থা এবং রোগ
+                                প্রতিরোধ ক্ষমতা উন্নত করতে সহায়তা করে। এটি মাছের পেট এবং শ্বাসযন্ত্রের সমস্যা কমাতে
+                                কার্যকর। <br>
+                                <b>উপকারিতা:</b><br>
+                                প্রদাহ কমায় এবং মাছের শরীরের প্রতিরোধ ক্ষমতা বাড়ায়। <br>
+                                জীবাণু এবং সংক্রমণ দূর করতে সহায়তা করে, মাছকে সুস্থ রাখে। <br>
+                                খাদ্য হজম প্রক্রিয়া উন্নত করে এবং শরীরের স্বাস্থ্য বজায় রাখে। <br>
+                                <b>অপকারিতা:</b> <br>
+                                অত্যধিক ব্যবহারে মাছের শরীরে অস্বস্তি বা পেটের সমস্যা হতে পারে। <br>
+                                <b>উপাদান:</b> <br>
+                                এনজাইমস: 40% <br>
+                                প্রাকৃতিক উদ্ভিদ উপাদান: 30% <br>
+                                ভিটামিন C: 15% <br>
+                                ম্যাগনেসিয়াম: 15% <br>
+                            </p>
+                            <span class="modal__price">$119</span>
+                        </div>
+
+                        <div class="modal__buttons">
+                            <button class="modal__button modal__button-ghost">Buy Now</button>
+                            <button class="modal__button">Contact Us</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article>
+                <!-- CARD PRODUCT -->
+                <div class="card__product">
+                    <img src="images/GreenZed.webp" alt="image" class="card__img">
+
+                    <div>
+                        <h3 class="card__name font-bold"> Green-Zed</h3>
+                        <span class="card__price">$59</span>
+                    </div>
+                </div>
+
+                <!-- POPUP MODAL -->
+                <div class="modal">
+                    <div class="modal__card">
+                        <i class="ri-close-large-line modal__close"></i>
+
+                        <!-- <img src="assets/img/card-img-3.png" alt="image" class="modal__img"> -->
+
+                        <div>
+                            <h3 class="modal__name font-bold"> Green-Zed</h3>
+                            <p class="modal__info">
+                                <b> বর্ণনা:</b>
+                                Green-Zed হল একটি শক্তিশালী পুষ্টি সাপ্লিমেন্ট যা মাছের শারীরিক শক্তি
+                                এবং বৃদ্ধি ত্বরান্বিত করতে ব্যবহৃত হয়। এটি মাছের শরীরে প্রয়োজনীয় পুষ্টি উপাদান সরবরাহ
+                                করে, যেমন ভিটামিন, প্রোটিন এবং খনিজ। <br>
+
+                                <b>উপকারিতা:</b><br>
+                                মাছের বৃদ্ধি দ্রুততর করে এবং শক্তি বাড়ায়। <br>
+                                শারীরিক উন্নতি সাধন করে এবং মাছের স্বাস্থ্যকে সুস্থ রাখে। <br>
+                                মাছের পুষ্টি ঘাটতি পূরণ করতে সহায়তা করে।<br>
+
+                                <b>অপকারিতা:</b> <br>
+                                অত্যধিক ব্যবহারে মাছের শরীরে পুষ্টির মাত্রা অতিরিক্ত হতে পারে, যা সঠিক হজমে সমস্যা
+                                সৃষ্টি করতে পারে। <br>
+                                <b>উপাদান:</b> <br>
+
+                                প্রোটিন: 35% <br>
+                                ভিটামিন A, C, D: 25% <br>
+                                খনিজ: 15% <br>
+                                কার্বোহাইড্রেট: 25% <br>
+                            </p>
+                            <span class="modal__price">$59</span>
+                        </div>
+
+                        <div class="modal__buttons">
+                            <button class="modal__button modal__button-ghost">Buy Now</button>
+                            <button class="modal__button">Contact us</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article>
+                <!-- CARD PRODUCT -->
+                <div class="card__product">
+                    <img src="images/zeomin-forte.jpg" alt="image" class="card__img">
+
+                    <div>
+                        <h3 class="card__name font-bold"> ZEOmin</h3>
+                        <span class="card__price">$39</span>
+                    </div>
+                </div>
+
+                <!-- POPUP MODAL -->
+                <div class="modal">
+                    <div class="modal__card">
+                        <i class="ri-close-large-line modal__close"></i>
+
+                        <!-- <img src="assets/img/card-img-4.png" alt="image" class="modal__img"> -->
+
+                        <div>
+                            <h3 class="modal__name font-bold"> ZEOmin</h3>
+                            <p class="modal__info">
+                                <b> বর্ণনা:</b>
+                                ZEOmin মাছের জন্য একটি ডিটক্সিফিকেশন সাপ্লিমেন্ট, যা টক্সিন দূর করতে সহায়তা করে। এটি
+                                মাছের শরীরের নির্গমনে সহায়তা করে এবং বিভিন্ন ধরনের রোগ ও সংক্রমণ প্রতিরোধ করে। <br>
+
+                                <b>উপকারিতা:</b><br>
+                                টক্সিন দূর করে এবং পানি ও পরিবেশের গুণগত মান উন্নত করে। <br>
+                                রোগ প্রতিরোধ ক্ষমতা বৃদ্ধি করে এবং মাছের শরীরের শক্তি বাড়ায়। <br>
+
+                                <b>অপকারিতা:</b> <br>
+                                অতিরিক্ত ব্যবহারে মাছের পেটে সমস্যা হতে পারে। <br>
+                                <b>উপাদান:</b> <br>
+                                জিওলজিক্যাল মাটির উপাদান (Zeolite): 50% <br>
+                                শিলা উপাদান: 30% <br>
+                                পানি শোধন উপাদান: 20% <br>
+                            </p>
+                            <span class="modal__price">$39</span>
+                        </div>
+
+                        <div class="modal__buttons">
+                            <button class="modal__button modal__button-ghost">Buy Now</button>
+                            <button class="modal__button">Contact us</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article>
+                <!-- CARD PRODUCT -->
+                <div class="card__product">
+                    <img src="images/protinex.png" alt="image" class="card__img">
+
+                    <div>
+                        <h3 class="card__name font-bold">Protinex</h3>
+                        <span class="card__price">$799</span>
+                    </div>
+                </div>
+
+                <!-- POPUP MODAL -->
+                <div class="modal">
+                    <div class="modal__card">
+                        <i class="ri-close-large-line modal__close"></i>
+
+                        <!-- <img src="assets/img/card-img-5.png" alt="image" class="modal__img"> -->
+
+                        <div>
+                            <h3 class="modal__name font-bold">Protinex</h3>
+                            <p class="modal__info">
+                                <b> বর্ণনা:</b>
+                                Protinex হল একটি শক্তিশালী প্রোটিন সাপ্লিমেন্ট যা মাছের পেশী বৃদ্ধির জন্য ব্যবহৃত হয়।
+                                এটি মাছের শারীরিক শক্তি এবং সহনশীলতা বৃদ্ধি করতে সহায়তা করে। <br>
+
+                                <b>উপকারিতা:</b><br>
+                                পেশী বৃদ্ধিতে সহায়তা করে। <br>
+                                শারীরিক শক্তি বাড়ায় এবং মাছের স্বাস্থ্য উন্নত করে। <br>
+                                দ্রুত সেরে ওঠার প্রক্রিয়া ত্বরান্বিত করে। <br>
+
+                                <b>অপকারিতা:</b> <br>
+                                অতিরিক্ত প্রোটিন ব্যবহারে মাছের শরীরে জমে যেতে পারে।<br>
+                                <b>উপাদান:</b> <br>
+
+                                প্রোটিন: 40% <br>
+                                ভিটামিন: 25% <br>
+                                খনিজ উপাদান: 35% <br>
+                            </p>
+                            <span class="modal__price">$799</span>
+                        </div>
+
+                        <div class="modal__buttons">
+                            <button class="modal__button modal__button-ghost">Buy Now</button>
+                            <button class="modal__button">Contact us</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article>
+                <!-- CARD PRODUCT -->
+                <div class="card__product">
+                    <img src="images/premax-pro.png" alt="image" class="card__img">
+
+                    <div>
+                        <h3 class="card__name font-bold">Pre-Max</h3>
+                        <span class="card__price">$19</span>
+                    </div>
+                </div>
+
+                <!-- POPUP MODAL -->
+                <div class="modal">
+                    <div class="modal__card">
+                        <i class="ri-close-large-line modal__close"></i>
+
+                        <!-- <img src="assets/img/card-img-6.png" alt="image" class="modal__img"> -->
+
+                        <div>
+                            <h3 class="modal__name font-bold">Pre-Max</h3>
+                            <p class="modal__info">
+                                <b> বর্ণনা:</b>
+                                Pre-Max মাছের হজম সহায়ক সাপ্লিমেন্ট, যা মাছের পেটের সমস্যা দূর করে এবং হজম প্রক্রিয়া
+                                উন্নত করে। এটি মাছের খাদ্য গ্রহণ ক্ষমতা বৃদ্ধি করে। <br>
+
+                                <b>উপকারিতা:</b><br>
+                                হজম প্রক্রিয়া উন্নত করে। <br>
+                                পেটের গ্যাস এবং এসিডিটি কমায়।<br>
+                                মাছের শরীরের স্বাস্থ্য বজায় রাখে। <br>
+
+                                <b>অপকারিতা:</b> <br>
+                                অতিরিক্ত ব্যবহারে মাছের পেটে সমস্যা হতে পারে।<br>
+                                <b>উপাদান:</b> <br>
+                                এনজাইমস: 50% <br>
+                                ভিটামিন B: 25% <br>
+                                খনিজ: 25% <br>
+
+                            </p>
+                            <span class="modal__price">$19</span>
+                        </div>
+
+                        <div class="modal__buttons">
+                            <button class="modal__button modal__button-ghost">Buy Now</button>
+                            <button class="modal__button">Contact us</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+        <br>
+
+        <!-- second part product  -->
+        <div class="card__container  center">
+            <article>
+                <!-- CARD PRODUCT -->
+                <div class="card__product">
+                    <img src="images/maxpro.png" alt="image" class="card__img">
+
+                    <div>
+                        <h3 class="card__name font-bold"> Max Pro</h3>
+                        <span class="card__price">$299</span>
+                    </div>
+                </div>
+
+                <!-- POPUP MODAL -->
+                <div class="modal">
+                    <div class="modal__card">
+                        <i class="ri-close-large-line modal__close"></i>
+
+                        <!-- <img src="assets/img/card-img-1.png" alt="image" class="modal__img"> -->
+
+                        <div>
+                            <h3 class="modal__name font-bold">Max Pro</h3>
+                            <p class="modal__info">
+                                <b> বর্ণনা:</b>
+                                Max Pro হল একটি শক্তিশালী প্রোটিন সাপ্লিমেন্ট যা মাছের পেশী বৃদ্ধি এবং শক্তি বৃদ্ধিতে
+                                সহায়তা করে। এটি মাছের শারীরিক অবস্থা এবং সহনশীলতা উন্নত করে। <br>
+
+                                <b>উপকারিতা:</b><br>
+                                পেশী বৃদ্ধি এবং শারীরিক শক্তি বাড়ায়। <br>
+                                দ্রুত বৃদ্ধি এবং উন্নতি সাধন করে। <br>
+                                মাছের শরীরকে সুস্থ রাখে। <br>
+
+                                <b>অপকারিতা:</b> <br>
+                                অতিরিক্ত প্রোটিন ব্যবহারে মাছের শরীরে সমস্যা হতে পারে।<br>
+                                <b>উপাদান:</b> <br>
+
+                                প্রোটিন: 60% <br>
+                                ভিটামিন A, C, E: 20% <br>
+                                খনিজ: 20% <br>
+                            </p>
+                            <span class="modal__price">$299</span>
+                        </div>
+
+                        <div class="modal__buttons">
+                            <button class="modal__button modal__button-ghost">Buy Now</button>
+                            <button class="modal__button">Contact us</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article>
+                <!-- CARD PRODUCT -->
+                <div class="card__product">
+                    <img src="images/hozmi.png" alt="image" class="card__img">
+
+                    <div>
+                        <h3 class="card__name font-bold">Hozmi</h3>
+                        <span class="card__price">$119</span>
+                    </div>
+                </div>
+
+                <!-- POPUP MODAL -->
+                <div class="modal">
+                    <div class="modal__card">
+                        <i class="ri-close-large-line modal__close"></i>
+
+                        <!-- <img src="assets/img/card-img-2.png" alt="image" class="modal__img"> -->
+
+                        <div>
+                            <h3 class="modal__name font-bold">Hozmi</h3>
+                            <p class="modal__info">
+                                <b> বর্ণনা:</b>
+                                Hozmi হল একটি হজম সহায়ক সাপ্লিমেন্ট যা মাছের খাদ্য পরিপাক প্রক্রিয়া সহজতর করে এবং পেটের
+                                সমস্যা দূর করতে সহায়তা করে।<br>
+
+                                <b>উপকারিতা:</b><br>
+                                হজম ক্ষমতা বৃদ্ধি করে। <br>
+                                পেটের গ্যাস এবং এসিডিটি কমায়। <br>
+                                মাছের শারীরিক স্বাস্থ্য বজায় রাখে। <br>
+
+                                <b>অপকারিতা:</b> <br>
+                                অতিরিক্ত ব্যবহারে মাছের পেটে সমস্যা সৃষ্টি হতে পারে।<br>
+                                <b>উপাদান:</b> <br>
+
+                                প্রাকৃতিক হজম উপাদান: 40% <br>
+                                ভিটামিন A: 30% <br>
+                                খনিজ: 30% <br>
+
+                            </p>
+                            <span class="modal__price">$119</span>
+                        </div>
+
+                        <div class="modal__buttons">
+                            <button class="modal__button modal__button-ghost">Buy Now</button>
+                            <button class="modal__button">Contact us</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article>
+                <!-- CARD PRODUCT -->
+                <div class="card__product">
+                    <img src="images/energy-growth-removebg-preview.png" alt="image" class="card__img">
+
+                    <div>
+                        <h3 class="card__name font-bold">Energy Growth</h3>
+                        <span class="card__price">$59</span>
+                    </div>
+                </div>
+
+                <!-- POPUP MODAL -->
+                <div class="modal">
+                    <div class="modal__card">
+                        <i class="ri-close-large-line modal__close"></i>
+
+                        <!-- <img src="assets/img/card-img-3.png" alt="image" class="modal__img"> -->
+
+                        <div>
+                            <h3 class="modal__name font-bold">Energy Growth</h3>
+                            <p class="modal__info">
+                                <b> বর্ণনা:</b>
+                                Energy Growth হল একটি শক্তি সাপ্লিমেন্ট যা মাছের শারীরিক শক্তি ও সহনশীলতা বৃদ্ধি করতে
+                                সহায়তা করে।<br>
+
+                                <b>উপকারিতা:</b><br>
+                                শারীরিক শক্তি এবং সহনশীলতা বৃদ্ধি করে।<br>
+                                দ্রুত বৃদ্ধি এবং উন্নতি সাধন করে। <br>
+                                <b>অপকারিতা:</b> <br>
+                                অতিরিক্ত ব্যবহারে মাছের শরীরে সমস্যা হতে পারে। <br>
+                                <b>উপাদান:</b> <br>
+                                শক্তি উপাদান: 50% <br>
+                                ভিটামিন B, C: 30% <br>
+                                খনিজ: 20% <br>
+                            </p>
+                            <span class="modal__price">$59</span>
+                        </div>
+
+                        <div class="modal__buttons">
+                            <button class="modal__button modal__button-ghost">Buy Now</button>
+                            <button class="modal__button">Contact us</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article>
+                <!-- CARD PRODUCT -->
+                <div class="card__product">
+                    <img src="images/safe-x-removebg-preview.png" alt="image" class="card__img">
+
+                    <div>
+                        <h3 class="card__name font-bold">Safe-X</h3>
+                        <span class="card__price">$39</span>
+                    </div>
+                </div>
+
+                <!-- POPUP MODAL -->
+                <div class="modal">
+                    <div class="modal__card">
+                        <i class="ri-close-large-line modal__close"></i>
+
+                        <!-- <img src="assets/img/card-img-4.png" alt="image" class="modal__img"> -->
+
+                        <div>
+                            <h3 class="modal__name font-bold">Safe-X</h3>
+                            <p class="modal__info">
+                                <b> বর্ণনা:</b>
+                                Safe-X হল একটি নিরাপত্তা সাপ্লিমেন্ট যা মাছের শরীরের জন্য উপকারী ব্যাকটেরিয়া ও জীবাণু
+                                দূর করতে ব্যবহৃত হয়। এটি মাছের রোগ প্রতিরোধ ক্ষমতা বৃদ্ধি করে এবং মাছকে সুরক্ষিত
+                                রাখে।<br>
+
+                                <b>উপকারিতা:</b><br>
+                                মাছের রোগ প্রতিরোধ ক্ষমতা বৃদ্ধি করে। <br>
+                                পানিতে উপস্থিত জীবাণু এবং ব্যাকটেরিয়া দূর করে। <br>
+                                মাছের স্বাস্থ্য সুরক্ষিত রাখে। <br>
+
+                                <b>অপকারিতা:</b> <br>
+                                অতিরিক্ত ব্যবহারে মাছের স্বাভাবিক ব্যাকটেরিয়াল ভারসাম্য নষ্ট হতে পারে।<br>
+                                <b>উপাদান:</b> <br>
+                                প্রাকৃতিক জীবাণু প্রতিরোধক: 60% <br>
+                                ভিটামিন C: 20% <br>
+                                খনিজ: 20% <br>
+                            </p>
+                            <span class="modal__price">$39</span>
+                        </div>
+
+                        <div class="modal__buttons">
+                            <button class="modal__button modal__button-ghost">Buy Now</button>
+                            <button class="modal__button">Contact us</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article>
+                <!-- CARD PRODUCT -->
+                <div class="card__product">
+                    <img src="images/amonil-removebg-preview.png" alt="image" class="card__img">
+
+                    <div>
+                        <h3 class="card__name font-bold"> Amonil</h3>
+                        <span class="card__price">$799</span>
+                    </div>
+                </div>
+
+                <!-- POPUP MODAL -->
+                <div class="modal">
+                    <div class="modal__card">
+                        <i class="ri-close-large-line modal__close"></i>
+
+                        <!-- <img src="assets/img/card-img-5.png" alt="image" class="modal__img"> -->
+
+                        <div>
+                            <h3 class="modal__name font-bold"> Amonil</h3>
+                            <p class="modal__info">
+                                <b> বর্ণনা:</b>
+                                Amonil হল একটি অ্যামোনিয়া শোধনকারী সাপ্লিমেন্ট যা মাছের জন্য পানির গুণগত মান উন্নত করতে
+                                সহায়তা করে। এটি পানিতে অতিরিক্ত অ্যামোনিয়া দূর করে এবং মাছের স্বাস্থ্য উন্নত করে। <br>
+
+                                <b>উপকারিতা:</b><br>
+                                পানিতে অতিরিক্ত অ্যামোনিয়া দূর করে, যা মাছের জন্য ক্ষতিকর। <br>
+                                পানির গুণমান উন্নত করে এবং মাছের শ্বাসযন্ত্রের স্বাস্থ্য বজায় রাখে। <br>
+
+                                <b>অপকারিতা:</b> <br>
+                                অতিরিক্ত ব্যবহারে পানির গুণমান পরিবর্তিত হতে পারে। <br>
+                                <b>উপাদান:</b> <br>
+                                অ্যামোনিয়া শোধক উপাদান: 70% <br>
+                                খনিজ: 30% <br>
+
+                            </p>
+                            <span class="modal__price">$799</span>
+                        </div>
+
+                        <div class="modal__buttons">
+                            <button class="modal__button modal__button-ghost">Buy Now</button>
+                            <button class="modal__button">Contact us</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article>
+                <!-- CARD PRODUCT -->
+                <div class="card__product">
+                    <img src="images/lice_cure-removebg-preview.png" alt="image" class="card__img">
+
+                    <div>
+                        <h3 class="card__name font-bold">LiceCure</h3>
+                        <span class="card__price">$19</span>
+                    </div>
+                </div>
+
+                <!-- POPUP MODAL -->
+                <div class="modal">
+                    <div class="modal__card">
+                        <i class="ri-close-large-line modal__close"></i>
+
+                        <!-- <img src="assets/img/card-img-6.png" alt="image" class="modal__img"> -->
+
+                        <div>
+                            <h3 class="modal__name font-bold">LiceCure</h3>
+                            <p class="modal__info">
+                                <b> বর্ণনা:</b>
+                                LiceCure হল একটি লাইজ শোধনকারী সাপ্লিমেন্ট যা মাছের ত্বকে লাইজ দূর করতে ব্যবহৃত হয়। এটি
+                                মাছের ত্বক এবং শ্বাসযন্ত্রের স্বাস্থ্য বজায় রাখে।<br>
+
+                                <b>উপকারিতা:</b><br>
+                                মাছের ত্বক থেকে লাইজ দূর করে। <br>
+                                মাছের শ্বাসযন্ত্রের স্বাস্থ্য বজায় রাখে। <br>
+                                ত্বকের সমস্যা প্রতিরোধে সহায়তা করে। <br>
+
+                                <b>অপকারিতা:</b> <br>
+                                অতিরিক্ত ব্যবহারে মাছের ত্বকে শুষ্কতা সৃষ্টি হতে পারে।<br>
+                                <b>উপাদান:</b> <br>
+
+                                লাইজ প্রতিরোধক: 50% <br>
+                                প্রাকৃতিক তেল: 30% <br>
+                                ভিটামিন E: 20% <br>
+                            </p>
+                            <span class="modal__price">$19</span>
+                        </div>
+
+                        <div class="modal__buttons">
+                            <button class="modal__button modal__button-ghost">Buy Now</button>
+                            <button class="modal__button">Contact us</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <br>
+
+        <!-- second part product  -->
+        <div class="card__container  center">
+            <article>
+                <!-- CARD PRODUCT -->
+                <div class="card__product">
+                    <img src="images/BioPowerpm-removebg-preview.png" alt="image" class="card__img">
+
+                    <div>
+                        <h3 class="card__name font-bold"> Biopower PM</h3>
+                        <span class="card__price">$299</span>
+                    </div>
+                </div>
+
+                <!-- POPUP MODAL -->
+                <div class="modal">
+                    <div class="modal__card">
+                        <i class="ri-close-large-line modal__close"></i>
+
+                        <!-- <img src="assets/img/card-img-1.png" alt="image" class="modal__img"> -->
+
+                        <div>
+                            <h3 class="modal__name font-bold"> Biopower PM</h3>
+                            <p class="modal__info">
+                                <b> বর্ণনা:</b>
+                                Biopower PM হল একটি শক্তিশালী পুষ্টি সাপ্লিমেন্ট যা মাছের শারীরিক শক্তি বৃদ্ধি করতে
+                                ব্যবহৃত হয়। এটি মাছের পেশী বৃদ্ধির জন্য অত্যন্ত কার্যকরী। <br>
+
+                                <b>উপকারিতা:</b><br>
+                                শারীরিক শক্তি এবং সহনশীলতা বৃদ্ধি করে। <br>
+                                মাছের পেশী বৃদ্ধি ত্বরান্বিত করে। <br>
+                                পুষ্টির ঘাটতি পূরণ করে। <br>
+
+                                <b>অপকারিতা:</b> <br>
+                                অতিরিক্ত ব্যবহারে মাছের পেটে সমস্যা হতে পারে। <br>
+                                <b>উপাদান:</b> <br>
+
+                                প্রোটিন: 50% <br>
+                                ভিটামিন B Complex: 30% <br>
+                                খনিজ: 20% <br>
+                            </p>
+                            <span class="modal__price">$299</span>
+                        </div>
+
+                        <div class="modal__buttons">
+                            <button class="modal__button modal__button-ghost">Buy Now</button>
+                            <button class="modal__button">Contact us</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article>
+                <!-- CARD PRODUCT -->
+                <div class="card__product">
+                    <img src="images/Lva-removebg-preview.png" alt="image" class="card__img">
+
+                    <div>
+                        <h3 class="card__name font-bold">LVA-3%</h3>
+                        <span class="card__price">$119</span>
+                    </div>
+                </div>
+
+                <!-- POPUP MODAL -->
+                <div class="modal">
+                    <div class="modal__card">
+                        <i class="ri-close-large-line modal__close"></i>
+
+                        <!-- <img src="assets/img/card-img-2.png" alt="image" class="modal__img"> -->
+
+                        <div>
+                            <h3 class="modal__name font-bold">LVA-3%</h3>
+                            <p class="modal__info">
+                                <b> বর্ণনা:</b>
+                                LVA-3% হল একটি বিশেষ সাপ্লিমেন্ট যা মাছের লিভার ফাংশন এবং হজম প্রক্রিয়া উন্নত করতে
+                                ব্যবহৃত হয়। এটি মাছের শরীরে পুষ্টির ঘাটতি পূরণ করে এবং শারীরিক অবস্থার উন্নতি সাধন করে।
+                                <br>
+
+                                <b>উপকারিতা:</b><br>
+                                লিভার ফাংশন উন্নত করে এবং পুষ্টি শোষণের ক্ষমতা বাড়ায়। <br>
+                                হজম প্রক্রিয়া উন্নত করে এবং পেটের সমস্যা দূর করে। <br>
+                                মাছের শারীরিক অবস্থাকে উন্নত করে।<br>
+
+                                <b>অপকারিতা:</b> <br>
+                                অতিরিক্ত ব্যবহারে মাছের লিভারে সমস্যা হতে পারে। <br>
+                                <b>উপাদান:</b> <br>
+
+                                লিভার সমর্থন উপাদান: 60% <br>
+                                ভিটামিন A, C: 30% <br>
+                                খনিজ: 10% <br>
+
+                            </p>
+                            <span class="modal__price">$119</span>
+                        </div>
+
+                        <div class="modal__buttons">
+                            <button class="modal__button modal__button-ghost">Buy Now</button>
+                            <button class="modal__button">Contact us</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article>
+                <!-- CARD PRODUCT -->
+                <div class="card__product">
+                    <img src="images/kill_max-removebg-preview.png" alt="image" class="card__img">
+
+                    <div>
+                        <h3 class="card__name font-bold">Kill Max</h3>
+                        <span class="card__price">$59</span>
+                    </div>
+                </div>
+
+                <!-- POPUP MODAL -->
+                <div class="modal">
+                    <div class="modal__card">
+                        <i class="ri-close-large-line modal__close"></i>
+
+                        <!-- <img src="assets/img/card-img-3.png" alt="image" class="modal__img"> -->
+
+                        <div>
+                            <h3 class="modal__name font-bold">Kill Max</h3>
+                            <p class="modal__info">
+                                <b> বর্ণনা:</b>
+                                Kill Max হল একটি জীবাণুনাশক সাপ্লিমেন্ট যা মাছের শরীর থেকে ক্ষতিকর ব্যাকটেরিয়া এবং
+                                পরজীবী দূর করে। এটি মাছের স্বাস্থ্য এবং জীবনকাল বৃদ্ধি করতে সহায়তা করে।
+                                <br>
+
+                                <b>উপকারিতা:</b><br>
+                                মাছের শরীর থেকে ক্ষতিকর ব্যাকটেরিয়া এবং পরজীবী দূর করে। <br>
+                                মাছের রোগ প্রতিরোধ ক্ষমতা বাড়ায়। <br>
+                                শ্বাসযন্ত্র এবং ত্বকের স্বাস্থ্য উন্নত করে। <br>
+
+                                <b>অপকারিতা:</b> <br>
+                                অতিরিক্ত ব্যবহারে মাছের শরীরে অস্বস্তি সৃষ্টি হতে পারে। <br>
+                                <b>উপাদান:</b> <br>
+
+                                জীবাণুনাশক উপাদান: 70% <br>
+                                ভিটামিন C: 20% <br>
+                                খনিজ: 10% <br>
+                            </p>
+                            <span class="modal__price">$59</span>
+                        </div>
+
+                        <div class="modal__buttons">
+                            <button class="modal__button modal__button-ghost">Buy Now</button>
+                            <button class="modal__button">Contact us</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article>
+                <!-- CARD PRODUCT -->
+                <div class="card__product">
+                    <img src="images/Energy-C-removebg-preview.png" alt="image" class="card__img">
+
+                    <div>
+                        <h3 class="card__name font-bold">Energy-C</h3>
+                        <span class="card__price">$39</span>
+                    </div>
+                </div>
+
+                <!-- POPUP MODAL -->
+                <div class="modal">
+                    <div class="modal__card">
+                        <i class="ri-close-large-line modal__close"></i>
+
+                        <!-- <img src="assets/img/card-img-4.png" alt="image" class="modal__img"> -->
+
+                        <div>
+                            <h3 class="modal__name font-bold">Energy-C</h3>
+                            <p class="modal__info">
+                                <b> বর্ণনা:</b>
+                                Energy-C হল একটি শক্তি বৃদ্ধিকারক সাপ্লিমেন্ট যা মাছের শারীরিক শক্তি ও সহনশীলতা বৃদ্ধি
+                                করতে ব্যবহৃত হয়। এটি মাছের শরীরকে সুস্থ রাখে এবং দ্রুত সেরে উঠতে সহায়তা করে।
+                                <br>
+
+                                <b>উপকারিতা:</b><br>
+                                শারীরিক শক্তি এবং সহনশীলতা বৃদ্ধি করে। <br>
+                                রোগ প্রতিরোধ ক্ষমতা বাড়ায় এবং দ্রুত সেরে উঠতে সহায়তা করে। <br>
+                                মাছের শরীরের স্বাস্থ্য বজায় রাখে। <br>
+
+                                <b>অপকারিতা:</b> <br>
+                                অতিরিক্ত ব্যবহারে মাছের শরীরে সমস্যা হতে পারে। <br>
+                                <b>উপাদান:</b> <br>
+
+                                ভিটামিন C: 60% <br>
+                                শক্তি উপাদান: 30% <br>
+                                খনিজ: 10% <br>
+                            </p>
+                            <span class="modal__price">$39</span>
+                        </div>
+
+                        <div class="modal__buttons">
+                            <button class="modal__button modal__button-ghost">Buy Now</button>
+                            <button class="modal__button">Contact us</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article>
+                <!-- CARD PRODUCT -->
+                <div class="card__product">
+                    <img src="images/oxylax-removebg-preview.png" alt="image" class="card__img">
+
+                    <div>
+                        <h3 class="card__name font-bold">OxyLax</h3>
+                        <span class="card__price">$799</span>
+                    </div>
+                </div>
+
+                <!-- POPUP MODAL -->
+                <div class="modal">
+                    <div class="modal__card">
+                        <i class="ri-close-large-line modal__close"></i>
+
+                        <!-- <img src="assets/img/card-img-5.png" alt="image" class="modal__img"> -->
+
+                        <div>
+                            <h3 class="modal__name font-bold">OxyLax</h3>
+                            <p class="modal__info">
+                                <b> বর্ণনা:</b>
+                                OxyLax হল একটি বিশেষ সাপ্লিমেন্ট যা মাছের পাচনতন্ত্রের জন্য উপকারী। এটি মাছের হজম ক্ষমতা
+                                বৃদ্ধি করে এবং অন্ত্রের স্বাস্থ্য রক্ষা করে। <br>
+
+                                <b>উপকারিতা:</b><br>
+                                মাছের হজম ক্ষমতা উন্নত করে। <br>
+                                অন্ত্রের স্বাস্থ্য বজায় রাখে। <br>
+                                খাবারের পুষ্টি শোষণ ক্ষমতা বৃদ্ধি করে। <br>
+                                <b>অপকারিতা:</b> <br>
+                                অতিরিক্ত ব্যবহারে মাছের পেটে অস্বস্তি হতে পারে। <br>
+                                <b>উপাদান:</b> <br>
+
+                                প্রাকৃতিক পাচনকারক: 60% <br>
+                                ভিটামিন A: 20% <br>
+                                খনিজ: 20% <br>
+                            </p>
+                            <span class="modal__price">$799</span>
+                        </div>
+
+                        <div class="modal__buttons">
+                            <button class="modal__button modal__button-ghost">Buy Now</button>
+                            <button class="modal__button">Contact us</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article>
+                <!-- CARD PRODUCT -->
+                <div class="card__product">
+                    <img src="images/dicit-removebg-preview.png" alt="image" class="card__img">
+
+                    <div>
+                        <h3 class="card__name font-bold"> Dicit</h3>
+                        <span class="card__price">$19</span>
+                    </div>
+                </div>
+
+                <!-- POPUP MODAL -->
+                <div class="modal">
+                    <div class="modal__card">
+                        <i class="ri-close-large-line modal__close"></i>
+
+                        <!-- <img src="assets/img/card-img-6.png" alt="image" class="modal__img"> -->
+
+                        <div>
+                            <h3 class="modal__name font-bold"> Dicit</h3>
+                            <p class="modal__info">
+                                <b> বর্ণনা:</b>
+                                Dicit হল একটি জীবাণুনাশক এবং শারীরিক শক্তি বৃদ্ধিকারক সাপ্লিমেন্ট যা মাছের শরীরের
+                                বিভিন্ন ধরনের জীবাণু ও পরজীবী দূর করে।<br>
+
+                                <b>উপকারিতা:</b><br>
+                                জীবাণু ও পরজীবী দূর করে। <br>
+                                মাছের শরীরের রোগ প্রতিরোধ ক্ষমতা বৃদ্ধি করে। <br>
+                                শক্তি ও সহনশীলতা বৃদ্ধি করে। <br>
+
+
+                                <b>অপকারিতা:</b> <br>
+                                অতিরিক্ত ব্যবহারে মাছের শারীরিক অবস্থার অবনতি হতে পারে।<br>
+                                <b>উপাদান:</b> <br>
+
+                                জীবাণুনাশক উপাদান: 50% <br>
+                                ভিটামিন E: 30% <br>
+                                খনিজ: 20% <br>
+                            </p>
+                            <span class="modal__price">$19</span>
+                        </div>
+
+                        <div class="modal__buttons">
+                            <button class="modal__button modal__button-ghost">Buy Now</button>
+                            <button class="modal__button">Contact us</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+
+        <br>
+
+        <!-- second part product  -->
+        <div class="card__container  center">
+            <article>
+                <!-- CARD PRODUCT -->
+                <div class="card__product">
+                    <img src="images/BioPower-removebg-preview.png" alt="image" class="card__img">
+
+                    <div>
+                        <h3 class="card__name font-bold"> Biopower</h3>
+                        <span class="card__price">$299</span>
+                    </div>
+                </div>
+
+                <!-- POPUP MODAL -->
+                <div class="modal">
+                    <div class="modal__card">
+                        <i class="ri-close-large-line modal__close"></i>
+
+                        <!-- <img src="assets/img/card-img-1.png" alt="image" class="modal__img"> -->
+
+                        <div>
+                            <h3 class="modal__name font-bold"> Biopower</h3>
+                            <p class="modal__info">
+                                <b> বর্ণনা:</b>
+                                Biopower হল একটি শক্তিশালী পুষ্টি সাপ্লিমেন্ট যা মাছের পেশী বৃদ্ধি এবং শক্তি বাড়াতে
+                                ব্যবহৃত হয়। এটি মাছের শরীরের পুষ্টির ঘাটতি পূরণ করে এবং শারীরিক শক্তি বৃদ্ধি করে।<br>
+
+                                <b>উপকারিতা:</b><br>
+                                পেশী বৃদ্ধিতে সহায়তা করে। <br>
+                                শারীরিক শক্তি ও সহনশীলতা বৃদ্ধি করে। <br>
+                                পুষ্টির ঘাটতি পূরণ করে। <br>
+
+
+                                <b>অপকারিতা:</b> <br>
+                                অতিরিক্ত ব্যবহারে মাছের শরীরে সমস্যা হতে পারে।<br>
+                                <b>উপাদান:</b> <br>
+
+                                প্রোটিন: 60% <br>
+                                ভিটামিন B Complex: 30% <br>
+                                খনিজ: 10% <br>
+
+                            </p>
+                            <span class="modal__price">$299</span>
+                        </div>
+
+                        <div class="modal__buttons">
+                            <button class="modal__button modal__button-ghost">Buy Now</button>
+                            <button class="modal__button">Contact us</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article>
+                <!-- CARD PRODUCT -->
+                <div class="card__product">
+                    <img src="images/vitamix.png" alt="image" class="card__img">
+
+                    <div>
+                        <h3 class="card__name font-bold">Vitamix</h3>
+                        <span class="card__price">$119</span>
+                    </div>
+                </div>
+
+                <!-- POPUP MODAL -->
+                <div class="modal">
+                    <div class="modal__card">
+                        <i class="ri-close-large-line modal__close"></i>
+
+                        <!-- <img src="assets/img/card-img-2.png" alt="image" class="modal__img"> -->
+
+                        <div>
+                            <h3 class="modal__name font-bold">Vitamix</h3>
+                            <p class="modal__info">
+                                <b> বর্ণনা:</b>
+                                Vitamix হল একটি ভিটামিন এবং খনিজ সাপ্লিমেন্ট যা মাছের শারীরিক সুস্থতা বজায় রাখতে ব্যবহৃত
+                                হয়। এটি মাছের রোগ প্রতিরোধ ক্ষমতা এবং শক্তি বৃদ্ধিতে সহায়তা করে। <br>
+
+                                <b>উপকারিতা:</b><br>
+                                মাছের রোগ প্রতিরোধ ক্ষমতা বৃদ্ধি করে। <br>
+                                শারীরিক শক্তি এবং সহনশীলতা বৃদ্ধি করে। <br>
+                                পুষ্টির ঘাটতি পূরণ করে। <br>
+
+                                <b>অপকারিতা:</b> <br>
+                                অতিরিক্ত ব্যবহারে মাছের শারীরিক অবস্থা খারাপ হতে পারে। <br>
+                                <b>উপাদান:</b> <br>
+
+                                ভিটামিন A, C, E: 50% <br>
+                                খনিজ: 30% <br>
+                                প্রোটিন: 20% <br>
+                            </p>
+                            <span class="modal__price">$119</span>
+                        </div>
+
+                        <div class="modal__buttons">
+                            <button class="modal__button modal__button-ghost">Buy Now</button>
+                            <button class="modal__button">Contact us</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+
+        </div>
+    </section>
+
+
+    <!-- product card end  -->
+
+
+    <!-- contact section  -->
+
+    <!-- Contact Form -->
+    <div class="max-w-6xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <!-- FAQ Section -->
+            <div>
+                <h2 class="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+
+                <div class="space-y-4">
+                    <details class="bg-gray-200 p-4 rounded-lg">
+                        <summary class="cursor-pointer font-semibold">কিভাবে অর্ডার করবো?</summary>
+                        <p class="mt-2">আপনি আমাদের ওয়েবসাইট বা সরাসরি WhatsApp এর মাধ্যমে অর্ডার করতে পারেন।</p>
+                    </details>
+
+                    <details class="bg-gray-200 p-4 rounded-lg">
+                        <summary class="cursor-pointer font-semibold">ডেলিভারি কত দিনে পাবো?</summary>
+                        <p class="mt-2">আমরা ৩-৫ দিনের মধ্যে ডেলিভারি দিয়ে থাকি।</p>
+                    </details>
+
+                    <details class="bg-gray-200 p-4 rounded-lg">
+                        <summary class="cursor-pointer font-semibold">পেমেন্ট পদ্ধতি কী?</summary>
+                        <p class="mt-2">আমরা বিকাশ, নগদ ও রকেট সাপোর্ট করি।</p>
+                    </details>
+
+                    <details class="bg-gray-200 p-4 rounded-lg">
+                        <summary class="cursor-pointer font-semibold">আমাদের সাথে কিভাবে যোগাযোগ করবো?</summary>
+                        <p class="mt-2">আপনি আমাদের WhatsApp (+8801890393486) অথবা ইমেইল ব্যবহার করতে পারেন।</p>
+                    </details>
+
+                    <details class="bg-gray-200 p-4 rounded-lg">
+                        <summary class="cursor-pointer font-semibold">পণ্যের রিটার্ন পলিসি কী?</summary>
+                        <p class="mt-2">আমরা ৭ দিনের মধ্যে রিটার্ন গ্রহণ করি, যদি পণ্য ক্ষতিগ্রস্ত হয়।</p>
+                    </details>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div>
+                <h2 class="text-2xl font-bold mb-4">Contact Us</h2>
+
+                <form id="contactForm" class="space-y-4">
+                    <input type="text" id="name" placeholder="Your Name" required
+                        class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <input type="email" id="email" placeholder="Your Email" required
+                        class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <input type="text" id="subject" placeholder="phone number" required
+                        class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <textarea id="message" placeholder="Your Message" required
+                        class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+
+                    <button type="button" id="sendBtn"
+                        class="w-full bg-green-500 text-white py-2 rounded-lg font-semibold hover:bg-green-600 transition">
+                        Send Now (WhatsApp)
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("sendBtn").addEventListener("click", function () {
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+            let subject = document.getElementById("subject").value;
+            let message = document.getElementById("message").value;
+
+            if (name === "" || email === "" || subject === "" || message === "") {
+                alert("সব তথ্য সঠিকভাবে পূরণ করুন!");
+                return;
+            }
+
+            let whatsappMessage = `*Contact Form Submission*%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A*Subject:* ${subject}%0A*Message:* ${message}`;
+
+            let whatsappURL = `https://api.whatsapp.com/send?phone=+8801890393486&text=${whatsappMessage}`;
+
+            window.open(whatsappURL, "_blank"); // New Tab খুলবে না, Direct WhatsApp এ পাঠাবে
+        });
+    </script>
+
+    <!-- contact section end  -->
+
+    <!-- Map Section -->
+    <div class="w-full max-w-4xl p-4 bg-white shadow-lg rounded-lg mx-auto mt-10">
+        <h1 class="text-center text-2xl font-bold mb-4">Location</h1>
+        <div id="map"></div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <script>
+        var map = L.map('map').setView([24.3745, 88.6042], 13); // রাজশাহী ভদ্রা লোকেশন
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        var marker = L.marker([24.3745, 88.6042]).addTo(map)
+            .bindPopup("<b>Rajshahi Vodra</b><br>This is the location of Vodra, Rajshahi.")
+            .openPopup();
+    </script>
+
+    <footer class="bg-gray-800 text-white py-10 mt-10">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <h2 class="text-2xl font-bold">MyWebsite</h2>
+                <p class="mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <div class="flex space-x-4 mt-4">
+                    <a href="#" class="text-gray-400 hover:text-white">🔵</a>
+                    <a href="#" class="text-gray-400 hover:text-white">🔴</a>
+                    <a href="#" class="text-gray-400 hover:text-white">🟠</a>
+                </div>
+            </div>
+            <div>
+                <h2 class="text-xl font-semibold">Menu</h2>
+                <ul class="mt-2 space-y-2">
+                    <li><a href="#home" class="hover:text-gray-400">Home</a></li>
+                    <li><a href="#about" class="hover:text-gray-400">About</a></li>
+                    <li><a href="#services" class="hover:text-gray-400">Services</a></li>
+                </ul>
+            </div>
+            <div>
+                <h2 class="text-xl font-semibold">Contact Us</h2>
+                <form class="mt-2 space-y-2" onsubmit="sendToWhatsApp(event)">
+                    <input type="text" id="name" placeholder="Your Name"
+                        class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600" required>
+                    <input type="email" id="email" placeholder="Your Email"
+                        class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600" required>
+                    <input type="text" id="phone" placeholder="Phone Number"
+                        class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600" required>
+                    <textarea id="message" placeholder="Message"
+                        class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600" required></textarea>
+                    <button type="submit" class="w-full bg-blue-600 p-2 rounded hover:bg-blue-700">Send Now</button>
+                </form>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById("mobile-menu-btn").addEventListener("click", () => {
+            document.getElementById("mobile-menu").classList.toggle("hidden");
+        });
+
+        function sendToWhatsApp(event) {
+            event.preventDefault();
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+            const message = document.getElementById("message").value;
+
+            const text = `Name: ${name}%0AEmail: ${email}%0APhone: ${phone}%0AMessage: ${message}`;
+            window.location.href = `https://wa.me/8801890393486?text=${text}`;
+        }
+
+
+
+        // product card js 
+
+        /*=============== CARD POPUP JS ===============*/
+        const modal = document.querySelectorAll('.modal'),
+            cardBtn = document.querySelectorAll('.card__product'),
+            modalClose = document.querySelectorAll('.modal__close'),
+            modalCard = document.querySelectorAll('.modal__card')
+
+        let activeModal = (modalClick) => {
+            modal[modalClick].classList.add('active-modal')
+        }
+
+        /* Show modal */
+        cardBtn.forEach((cardBtn, i) => {
+            cardBtn.addEventListener('click', () => {
+                activeModal(i)
+            })
+        })
+
+        /* Hide modal */
+        modalClose.forEach((modalClose) => {
+            modalClose.addEventListener('click', () => {
+                modal.forEach((modalRemove) => {
+                    modalRemove.classList.remove('active-modal')
+                })
+            })
+        })
+
+        /* Hide modal on background click */
+        modal.forEach((modal) => {
+            modal.addEventListener('click', () => {
+                modal.classList.remove('active-modal')
+            })
+        })
+
+        /* Don't hide modal on card click (by event propagation) */
+        modalCard.forEach((modalCard) => {
+            modalCard.addEventListener('click', (e) => {
+                e.stopPropagation()
+            })
+        })
+
+
+
+        // product card end js 
+    </script>
+</body>
+
+</html>
